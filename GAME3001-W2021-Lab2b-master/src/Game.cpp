@@ -102,10 +102,9 @@ bool Game::init(const char* title, const int x, const int y, const int width, co
 void Game::start()
 {
 	m_currentSceneState = NO_SCENE;
-
-	//TODO: temporarily commented out
-	//changeSceneState(START_SCENE);
-	changeSceneState(PLAY_SCENE);
+	
+	changeSceneState(START_SCENE);
+	//changeSceneState(PLAY_SCENE);
 }
 
 bool Game::isRunning() const

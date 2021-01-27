@@ -23,8 +23,9 @@ public:
 private:
 	Label* m_pStartLabel{};
 	Label* m_pInstructionsLabel{};
+	Label* m_pStudentInfo{};	// New Label declared 
 
-	Ship* m_pShip{};
+	//Ship* m_pShip{};
 
 	Button* m_pStartButton;
 };

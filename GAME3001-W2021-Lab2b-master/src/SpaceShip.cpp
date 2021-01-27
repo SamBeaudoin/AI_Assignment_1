@@ -6,7 +6,7 @@
 
 SpaceShip::SpaceShip()
 {
-	TextureManager::Instance()->load("../Assets/textures/spaceship.png", "spaceship");
+	TextureManager::Instance()->load("../Assets/textures/arrow.png", "spaceship");
 
 	auto size = TextureManager::Instance()->getTextureSize("spaceship");
 	setWidth(size.x);

@@ -1,3 +1,3 @@
-# GAME3001-W2021-Lab 2
+# Assignment 1 
 
-This is a demo project for Lab 2
+# heres hoping that it works and all my files are here this time

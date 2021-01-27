@@ -31,6 +31,9 @@
     <Filter Include="DOCS">
       <UniqueIdentifier>{a44d29c3-2835-4901-a310-0039121b84b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Textures">
+      <UniqueIdentifier>{0e07572d-33db-4442-8cdf-3ddbf464bec9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\StartScene.cpp">
@@ -274,5 +277,13 @@
     <None Include="..\README.md">
       <Filter>DOCS</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Assets\textures\shield.png">
+      <Filter>Textures</Filter>
+    </Image>
+    <Image Include="..\Assets\textures\arrow.png">
+      <Filter>Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
