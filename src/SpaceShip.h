@@ -4,9 +4,12 @@
 #include "DisplayObject.h"
 #include "TextureManager.h"
 
+#include "ShipModeType.h"
+
 class SpaceShip final : public DisplayObject
 {
 public:
+	
 	// constructor(s)
 	SpaceShip();
 
@@ -29,6 +32,13 @@ public:
 	void setTurnRate(float rate);
 	float getAccelerationRate() const;
 	void setAccelerationRate(float rate);
+
+	ShipModeType getMode() const;
+	void setMode(ShipModeType new_mode);
+
+	/*GameObjectType getType() const;
+	void setType(GameObjectType new_type);*/
+	
 	
 private:
 
@@ -39,10 +49,14 @@ private:
 	float m_maxSpeed;
 	float m_turnRate;
 	float m_accelerationRate;
-	bool m_arrive;
-
+	
+	
+	//enum m_mode {SEEK, FLEE, ARRIVE};
+	ShipModeType m_mode;
 	// private function
 	void m_Seek();
+	void m_Arrive();
+	void m_Flee();
 };
 
-#endif /* defined (__SPACE_SHIP__) */
+#endif // defined (__SPACE_SHIP__) 

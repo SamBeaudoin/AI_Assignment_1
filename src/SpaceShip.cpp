@@ -22,6 +22,7 @@ SpaceShip::SpaceShip()
 	setRotation(0.0f);
 	setAccelerationRate(10.0f);
 	setTurnRate(10.0f);
+	
 }
 
 SpaceShip::~SpaceShip()
@@ -38,11 +39,36 @@ void SpaceShip::draw()
 
 void SpaceShip::update()
 {
-	m_Seek();
+	switch (m_mode)
+	{
+	case SEEK:
+		m_Seek();
+
+	case ARRIVE:
+		m_Arrive();
+		
+	case FLEE:
+		m_Flee();
+		
+	default:
+		m_Seek();
+		
+	}
+	
 }
 
 void SpaceShip::clean()
 {
+}
+
+ShipModeType SpaceShip::getMode() const
+{
+	return m_mode;
+}
+
+void SpaceShip::setMode(ShipModeType new_mode)
+{
+	m_mode = new_mode;
 }
 
 void SpaceShip::setDestination(const glm::vec2 destination)
@@ -103,6 +129,81 @@ float SpaceShip::getRotation() const
 {
 	return m_rotationAngle;
 }
+
+void SpaceShip::m_Flee()
+{
+	auto deltaTime = TheGame::Instance()->getDeltaTime();
+
+	// direction with magnitude
+	m_targetDirection = m_destination - getTransform()->position;
+
+	// normalized direction
+	m_targetDirection = Util::normalize(m_targetDirection);
+
+	auto target_rotation = Util::signedAngle(getOrientation(), m_targetDirection);
+
+	auto turn_sensitivity = 5.0f;
+
+	if (abs(target_rotation) > turn_sensitivity)
+	{
+		if (target_rotation > 0.0f)
+		{
+			setRotation(getRotation() + getTurnRate());
+		}
+		else if (target_rotation < 0.0f)
+		{
+			setRotation(getRotation() - getTurnRate());
+		}
+	}
+
+	getRigidBody()->acceleration = getOrientation() * getAccelerationRate();
+
+	// using the formula pf = pi + vi*t + 0.5ai*t^2
+	getRigidBody()->velocity += getOrientation() * (deltaTime)+
+		0.5f * getRigidBody()->acceleration * (deltaTime);
+
+	getRigidBody()->velocity = Util::clamp(getRigidBody()->velocity, m_maxSpeed);
+
+	getTransform()->position += getRigidBody()->velocity;
+}
+
+void SpaceShip::m_Arrive()
+{
+	auto deltaTime = TheGame::Instance()->getDeltaTime();
+
+	// direction with magnitude
+	m_targetDirection = m_destination - getTransform()->position;
+
+	// normalized direction
+	m_targetDirection = Util::normalize(m_targetDirection);
+
+	auto target_rotation = Util::signedAngle(getOrientation(), m_targetDirection);
+
+	auto turn_sensitivity = 5.0f;
+
+	if (abs(target_rotation) > turn_sensitivity)
+	{
+		if (target_rotation > 0.0f)
+		{
+			setRotation(getRotation() + getTurnRate());
+		}
+		else if (target_rotation < 0.0f)
+		{
+			setRotation(getRotation() - getTurnRate());
+		}
+	}
+
+	getRigidBody()->acceleration = getOrientation() * getAccelerationRate();
+
+	// using the formula pf = pi + vi*t + 0.5ai*t^2
+	getRigidBody()->velocity += getOrientation() * (deltaTime)+
+		0.5f * getRigidBody()->acceleration * (deltaTime);
+
+	getRigidBody()->velocity = Util::clamp(getRigidBody()->velocity, m_maxSpeed);
+
+	getTransform()->position += getRigidBody()->velocity;
+}
+
 
 void SpaceShip::m_Seek()
 {
