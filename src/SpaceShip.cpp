@@ -33,12 +33,12 @@ void SpaceShip::draw()
 		getTransform()->position.x, getTransform()->position.y, m_rotationAngle, 255, true);
 
 	// Commented out Debug line
-	//Util::DrawLine(getTransform()->position, (getTransform()->position + getOrientation() * 60.0f) );
+	Util::DrawLine(getTransform()->position, (getTransform()->position + getOrientation() * 60.0f) );
 }
 
 void SpaceShip::update()
 {
-	m_Move();
+	m_Seek();
 }
 
 void SpaceShip::clean()
@@ -104,7 +104,7 @@ float SpaceShip::getRotation() const
 	return m_rotationAngle;
 }
 
-void SpaceShip::m_Move()
+void SpaceShip::m_Seek()
 {
 	auto deltaTime = TheGame::Instance()->getDeltaTime();
 

@@ -33,6 +33,7 @@ bool CollisionManager::squaredRadiusCheck(GameObject* object1, GameObject* objec
 
 				
 				break;
+				
 			default:
 				
 				break;

@@ -39,9 +39,10 @@ private:
 	float m_maxSpeed;
 	float m_turnRate;
 	float m_accelerationRate;
+	bool m_arrive;
 
 	// private function
-	void m_Move();
+	void m_Seek();
 };
 
 #endif /* defined (__SPACE_SHIP__) */

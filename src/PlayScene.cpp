@@ -114,7 +114,15 @@ void PlayScene::GUI_Function() const
 		m_pSpaceShip->setTurnRate(turn_rate);
 	}
 	
-	if(ImGui::Button("Start"))
+	if(ImGui::Button("Seek"))
+	{
+		m_pSpaceShip->setEnabled(true);
+		
+	}
+
+	ImGui::SameLine();
+
+	if (ImGui::Button("Arrive"))
 	{
 		m_pSpaceShip->setEnabled(true);
 	}
@@ -132,6 +140,10 @@ void PlayScene::GUI_Function() const
 		speed = 10.0f;
 		angleInRadians = m_pSpaceShip->getRotation();
 	}
+
+	
+
+	
 
 	ImGui::Separator();
 
