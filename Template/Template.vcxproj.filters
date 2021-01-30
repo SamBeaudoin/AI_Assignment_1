@@ -275,6 +275,9 @@
     <ClInclude Include="..\src\ShipModeType.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\Line.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">
@@ -286,6 +289,9 @@
       <Filter>Textures</Filter>
     </Image>
     <Image Include="..\Assets\textures\arrow.png">
+      <Filter>Textures</Filter>
+    </Image>
+    <Image Include="..\Assets\textures\target.png">
       <Filter>Textures</Filter>
     </Image>
   </ItemGroup>

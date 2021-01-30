@@ -36,21 +36,27 @@ void SpaceShip::draw()
 		getTransform()->position.x, getTransform()->position.y, m_rotationAngle, 255, true);
 
 	// Commented out Debug line
-	Util::DrawLine(getTransform()->position, (getTransform()->position + getOrientation() * 60.0f) );
+	//Util::DrawLine(getTransform()->position, (getTransform()->position + getOrientation() * 60.0f) );
+	Util::DrawLine(m_leftWhisker.Start(), m_leftWhisker.End());
+	Util::DrawLine(m_rightWhisker.Start(), m_rightWhisker.End());
+	Util::DrawLine(m_middleWhisker.Start(), m_middleWhisker.End());
 }
 
 void SpaceShip::update()
 {
-
+	m_middleWhisker.setLine(this->getTransform()->position,
+		this->getTransform()->position + Util::getOrientation(m_rotationAngle) * 100.0f);
+	m_leftWhisker.setLine(this->getTransform()->position,
+		this->getTransform()->position + Util::getOrientation(m_rotationAngle - 30) * 50.0f);
+	m_rightWhisker.setLine(this->getTransform()->position,
+		this->getTransform()->position + Util::getOrientation(m_rotationAngle + 30) * 50.0f);
 	if (this->getMode() == SEEK)
 	{
 		m_Seek();
-		
 	}
 	else if (this->getMode() == ARRIVE) 
 	{
 		m_Arrive();
-		
 	}
 	else if (this->getMode() == FLEE) 
 	{
@@ -83,6 +89,11 @@ ShipModeType SpaceShip::getMode() const
 void SpaceShip::setMode(const ShipModeType new_mode)
 {
 	m_mode = new_mode;
+}
+
+void SpaceShip::setWhisker(Line whisker, glm::vec2 start, glm::vec2 end)
+{
+	whisker.setLine(start, end);
 }
 
 void SpaceShip::setDestination(const glm::vec2 destination)
@@ -118,6 +129,16 @@ float SpaceShip::getAccelerationRate() const
 void SpaceShip::setAccelerationRate(const float rate)
 {
 	m_accelerationRate = rate;
+}
+
+void SpaceShip::setColliding(bool status)
+{
+	m_isColliding = status;
+}
+
+bool SpaceShip::getColliding()
+{
+	return m_isColliding;
 }
 
 void SpaceShip::setOrientation(const glm::vec2 orientation)
@@ -156,7 +177,7 @@ void SpaceShip::m_Flee()
 	m_targetDirection = Util::normalize(m_targetDirection);
 
 	
-
+	// Multiplied Orientation by -1 to reversi swap to exact opposite of target
 	auto target_rotation = Util::signedAngle((getOrientation() * -1.0f), m_targetDirection);
 
 	auto turn_sensitivity = 5.0f;
@@ -220,6 +241,8 @@ void SpaceShip::m_Arrive()
 	getRigidBody()->velocity = Util::clamp(getRigidBody()->velocity, m_maxSpeed);
 
 	getTransform()->position += getRigidBody()->velocity;
+
+	//ToDo: Add arrival radius checks
 }
 
 
@@ -237,18 +260,22 @@ void SpaceShip::m_Seek()
 	auto target_rotation = Util::signedAngle(getOrientation(), m_targetDirection);
 
 	auto turn_sensitivity = 5.0f;
-
-	if(abs(target_rotation) > turn_sensitivity)
+	
+	if (!getColliding())		// to eliminate jittery-ness, lol IDK how to do it
 	{
-		if (target_rotation > 0.0f)
+		if (abs(target_rotation) > turn_sensitivity)
 		{
-			setRotation(getRotation() + getTurnRate());
-		}
-		else if (target_rotation < 0.0f)
-		{
-			setRotation(getRotation() - getTurnRate());
+			if (target_rotation > 0.0f)
+			{
+				setRotation(getRotation() + getTurnRate());
+			}
+			else if (target_rotation < 0.0f)
+			{
+				setRotation(getRotation() - getTurnRate());
+			}
 		}
 	}
+
 	
 	getRigidBody()->acceleration = getOrientation() * getAccelerationRate();
 

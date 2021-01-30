@@ -2,9 +2,10 @@
 #ifndef __SPACE_SHIP__
 #define __SPACE_SHIP__
 #include "DisplayObject.h"
+#include "Line.h"	// Used to create Whiskers
 #include "TextureManager.h"
 
-#include "ShipModeType.h"
+#include "ShipModeType.h"	// Used to determine flight mode
 
 class SpaceShip final : public DisplayObject
 {
@@ -33,12 +34,13 @@ public:
 	float getAccelerationRate() const;
 	void setAccelerationRate(float rate);
 
-	ShipModeType getMode() const;
-	void setMode(const ShipModeType new_mode);
+	void setColliding(bool status);				// setter and getter for collision checks
+	bool getColliding();
 
-	/*GameObjectType getType() const;
-	void setType(GameObjectType new_type);*/
-	
+	ShipModeType getMode() const;				// Getting flight modes
+	void setMode(const ShipModeType new_mode);	// Setting flight modes
+
+	void setWhisker(Line whisker, glm::vec2 start, glm::vec2 end);	//Setting whiskers start and end
 	
 private:
 
@@ -49,10 +51,17 @@ private:
 	float m_maxSpeed;
 	float m_turnRate;
 	float m_accelerationRate;
+
+	bool m_isColliding = false;			// Collision Boolean
+
+	friend class PlayScene;
 	
+	// Whisker objects for individual collision 
+	Line m_leftWhisker, m_rightWhisker, m_middleWhisker;
 	
 	//enum m_mode {SEEK, FLEE, ARRIVE};
 	ShipModeType m_mode = MODELESS;
+	
 	// private function
 	void m_Seek();
 	void m_Arrive();
