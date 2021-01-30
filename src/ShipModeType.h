@@ -3,6 +3,7 @@
 #define __SHIP_MODE__
 enum ShipModeType
 {
+	MODELESS,
 	SEEK = 1,
 	ARRIVE,
 	FLEE,

@@ -33,10 +33,6 @@ GameObjectType GameObject::getType() const
 	return m_type;
 }
 
-void GameObject::setType(const GameObjectType new_type)
-{
-	m_type = new_type;
-}
 
 void GameObject::setWidth(const int new_width)
 {
@@ -52,6 +48,11 @@ void GameObject::setHeight(const int new_height)
 void GameObject::setEnabled(const bool state)
 {
 	m_enabled = state;
+}
+
+void GameObject::setType(const GameObjectType new_type)
+{
+	m_type = new_type;
 }
 
 bool GameObject::isEnabled() const

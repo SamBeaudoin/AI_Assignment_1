@@ -22,6 +22,8 @@ SpaceShip::SpaceShip()
 	setRotation(0.0f);
 	setAccelerationRate(10.0f);
 	setTurnRate(10.0f);
+
+	setMode(NUM_OF_MODES);
 	
 }
 
@@ -39,8 +41,24 @@ void SpaceShip::draw()
 
 void SpaceShip::update()
 {
-	switch (m_mode)
+
+	if (this->getMode() == SEEK)
 	{
+		m_Seek();
+		
+	}
+	else if (this->getMode() == ARRIVE) 
+	{
+		m_Arrive();
+		
+	}
+	else if (this->getMode() == FLEE) 
+	{
+		m_Flee();
+	}
+	/*switch (m_mode) //	Using switch Case changes speed and acceleration?
+	{ 				  //	Possibly because of delta time being changed? IDK?
+	
 	case SEEK:
 		m_Seek();
 
@@ -49,12 +67,8 @@ void SpaceShip::update()
 		
 	case FLEE:
 		m_Flee();
-		
-	default:
-		m_Seek();
-		
 	}
-	
+	*/
 }
 
 void SpaceShip::clean()
@@ -66,7 +80,7 @@ ShipModeType SpaceShip::getMode() const
 	return m_mode;
 }
 
-void SpaceShip::setMode(ShipModeType new_mode)
+void SpaceShip::setMode(const ShipModeType new_mode)
 {
 	m_mode = new_mode;
 }
@@ -132,6 +146,7 @@ float SpaceShip::getRotation() const
 
 void SpaceShip::m_Flee()
 {
+	std::cout << "Fleeing!" << std::endl;
 	auto deltaTime = TheGame::Instance()->getDeltaTime();
 
 	// direction with magnitude
@@ -140,7 +155,9 @@ void SpaceShip::m_Flee()
 	// normalized direction
 	m_targetDirection = Util::normalize(m_targetDirection);
 
-	auto target_rotation = Util::signedAngle(getOrientation(), m_targetDirection);
+	
+
+	auto target_rotation = Util::signedAngle((getOrientation() * -1.0f), m_targetDirection);
 
 	auto turn_sensitivity = 5.0f;
 
@@ -169,6 +186,7 @@ void SpaceShip::m_Flee()
 
 void SpaceShip::m_Arrive()
 {
+	std::cout << "Arriving!" << std::endl;
 	auto deltaTime = TheGame::Instance()->getDeltaTime();
 
 	// direction with magnitude
@@ -207,6 +225,7 @@ void SpaceShip::m_Arrive()
 
 void SpaceShip::m_Seek()
 {
+	std::cout << "Seeking!" << std::endl;
 	auto deltaTime = TheGame::Instance()->getDeltaTime();
 
 	// direction with magnitude

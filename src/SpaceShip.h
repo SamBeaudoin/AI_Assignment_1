@@ -34,7 +34,7 @@ public:
 	void setAccelerationRate(float rate);
 
 	ShipModeType getMode() const;
-	void setMode(ShipModeType new_mode);
+	void setMode(const ShipModeType new_mode);
 
 	/*GameObjectType getType() const;
 	void setType(GameObjectType new_type);*/
@@ -52,7 +52,7 @@ private:
 	
 	
 	//enum m_mode {SEEK, FLEE, ARRIVE};
-	ShipModeType m_mode;
+	ShipModeType m_mode = MODELESS;
 	// private function
 	void m_Seek();
 	void m_Arrive();

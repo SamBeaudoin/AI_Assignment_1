@@ -116,32 +116,31 @@ void PlayScene::GUI_Function() const
 	
 	if(ImGui::Button("Seek"))
 	{
-		m_pSpaceShip->setEnabled(true);
 		m_pSpaceShip->setMode(SEEK);
-		
+		m_pSpaceShip->setEnabled(true);
 	}
 
 	ImGui::SameLine();
 
 	if (ImGui::Button("Arrive"))
 	{
-		m_pSpaceShip->setEnabled(true);
 		m_pSpaceShip->setMode(ARRIVE);
+		m_pSpaceShip->setEnabled(true);
 	}
 
 	ImGui::SameLine();
 
 	if (ImGui::Button("Flee"))
 	{
-		m_pSpaceShip->setEnabled(true);
 		m_pSpaceShip->setMode(FLEE);
+		m_pSpaceShip->setEnabled(true);
 	}
 
 	ImGui::SameLine();
 	
 	if (ImGui::Button("Reset"))
 	{
-		m_pSpaceShip->setMode(SEEK);
+		m_pSpaceShip->setMode(NUM_OF_MODES);
 		m_pSpaceShip->getTransform()->position = glm::vec2(100.0f, 100.0f);
 		m_pSpaceShip->setEnabled(false);
 		m_pSpaceShip->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
