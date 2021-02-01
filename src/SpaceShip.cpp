@@ -216,9 +216,28 @@ void SpaceShip::m_Arrive()
 	// normalized direction
 	m_targetDirection = Util::normalize(m_targetDirection);
 
+	float distance= Util::distance(this->getTransform()->position, m_destination);
+	float radius = 125;
+	float targetSpeed;
+
 	auto target_rotation = Util::signedAngle(getOrientation(), m_targetDirection);
 
 	auto turn_sensitivity = 5.0f;
+
+	if (distance >radius)
+	{
+		targetSpeed = m_maxSpeed;
+	}
+	else
+	{
+		targetSpeed = m_maxSpeed * distance / radius;
+	}
+
+	if(distance  <= 2 )
+	{
+		targetSpeed = 0;
+	}
+
 
 	if (abs(target_rotation) > turn_sensitivity)
 	{
@@ -238,7 +257,7 @@ void SpaceShip::m_Arrive()
 	getRigidBody()->velocity += getOrientation() * (deltaTime)+
 		0.5f * getRigidBody()->acceleration * (deltaTime);
 
-	getRigidBody()->velocity = Util::clamp(getRigidBody()->velocity, m_maxSpeed);
+	getRigidBody()->velocity = Util::clamp(getRigidBody()->velocity, targetSpeed);
 
 	getTransform()->position += getRigidBody()->velocity;
 

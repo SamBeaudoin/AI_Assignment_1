@@ -39,7 +39,7 @@ void PlayScene::update()
 	{
 		m_pSpaceShip->setColliding(true);
 		m_pSpaceShip->setRotation(m_pSpaceShip->getRotation()+ 0.1f * Util::Rad2Deg);
-		m_pSpaceShip->setAccelerationRate(0.5);
+		m_pSpaceShip->setAccelerationRate(m_pSpaceShip->getAccelerationRate() * 0.2f);
 	}
 	
 	if (!CollisionManager::lineRectCheck(m_pSpaceShip->m_middleWhisker.Start(), m_pSpaceShip->m_middleWhisker.End(),
