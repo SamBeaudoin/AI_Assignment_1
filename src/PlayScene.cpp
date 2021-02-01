@@ -39,7 +39,7 @@ void PlayScene::update()
 	{
 		m_pSpaceShip->setColliding(true);
 		m_pSpaceShip->setRotation(m_pSpaceShip->getRotation()+ 0.1f * Util::Rad2Deg);
-		m_pSpaceShip->setAccelerationRate(m_pSpaceShip->getAccelerationRate() * 0.2f);
+		
 	}
 	
 	if (!CollisionManager::lineRectCheck(m_pSpaceShip->m_middleWhisker.Start(), m_pSpaceShip->m_middleWhisker.End(),
@@ -94,6 +94,25 @@ void PlayScene::start()
 	m_pSpaceShip->setEnabled(false);
 	m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
 	addChild(m_pSpaceShip);
+
+	const SDL_Color red = { 255, 0, 0, 255 };
+	m_pPlayInstructions = new Label("Use the ( ` ) key and the following buttons to interact", "Consolas", 15, red, glm::vec2(400.0f, 25.0f));
+	m_pPlayInstructions->setParent(this);
+	addChild(m_pPlayInstructions);
+
+	// Music for PlayScene
+	SoundManager::Instance().load("../Assets/audio/punchy_tunes.ogg", "Punchy", SOUND_MUSIC);
+	SoundManager::Instance().setMusicVolume(25);
+	SoundManager::Instance().playMusic("Punchy", 0);
+
+	// Sound Effect for Arrow
+	SoundManager::Instance().load("../Assets/audio/Fantasy_Grab.wav", "Schwing", SOUND_SFX);
+
+	// Sound Effect for De-Spawning
+	SoundManager::Instance().load("../Assets/audio/beep-07.wav", "Beep", SOUND_SFX);
+
+	// Set Volume for sounds
+	SoundManager::Instance().setSoundVolume(25);
 }
 
 void PlayScene::GUI_Function() const
@@ -134,6 +153,7 @@ void PlayScene::GUI_Function() const
 	{
 		m_pSpaceShip->setMode(SEEK);
 		m_pSpaceShip->setEnabled(true);
+		SoundManager::Instance().playSound("Schwing", 0);
 	}
 
 	ImGui::SameLine();
@@ -142,6 +162,7 @@ void PlayScene::GUI_Function() const
 	{
 		m_pSpaceShip->setMode(ARRIVE);
 		m_pSpaceShip->setEnabled(true);
+		SoundManager::Instance().playSound("Schwing", 0);
 	}
 
 	ImGui::SameLine();
@@ -150,6 +171,7 @@ void PlayScene::GUI_Function() const
 	{
 		m_pSpaceShip->setMode(FLEE);
 		m_pSpaceShip->setEnabled(true);
+		SoundManager::Instance().playSound("Schwing", 0);
 	}
 
 	ImGui::SameLine();
@@ -165,6 +187,7 @@ void PlayScene::GUI_Function() const
 		acceleration_rate = 2.0f;
 		speed = 10.0f;
 		angleInRadians = m_pSpaceShip->getRotation();
+		SoundManager::Instance().playSound("Beep", 0);
 	}
 
 	

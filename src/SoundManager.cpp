@@ -148,6 +148,7 @@ void SoundManager::panSet(const int amount, const int channel)
 	const int rightVol = (255 * std::min(m_pan / 50.0, 1.0));
 	std::cout << "Right:" << rightVol << std::endl;
 	Mix_SetPanning(channel, leftVol, rightVol);
+
 }
 
 void SoundManager::quit()

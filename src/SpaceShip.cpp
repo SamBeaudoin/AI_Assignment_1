@@ -50,6 +50,7 @@ void SpaceShip::update()
 		this->getTransform()->position + Util::getOrientation(m_rotationAngle - 30) * 50.0f);
 	m_rightWhisker.setLine(this->getTransform()->position,
 		this->getTransform()->position + Util::getOrientation(m_rotationAngle + 30) * 50.0f);
+	
 	if (this->getMode() == SEEK)
 	{
 		m_Seek();
@@ -261,7 +262,7 @@ void SpaceShip::m_Arrive()
 
 	getTransform()->position += getRigidBody()->velocity;
 
-	//ToDo: Add arrival radius checks
+	
 }
 
 

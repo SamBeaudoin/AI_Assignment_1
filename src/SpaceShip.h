@@ -55,9 +55,10 @@ private:
 	bool m_isColliding = false;			// Collision Boolean
 
 	friend class PlayScene;
+	friend class Target;
 	
 	// Whisker objects for individual collision 
-	Line m_leftWhisker, m_rightWhisker, m_middleWhisker;
+	Line m_leftWhisker, m_rightWhisker, m_middleWhisker, m_lineOfSight;
 	
 	//enum m_mode {SEEK, FLEE, ARRIVE};
 	ShipModeType m_mode = MODELESS;
