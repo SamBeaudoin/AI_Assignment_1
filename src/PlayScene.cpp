@@ -30,16 +30,26 @@ void PlayScene::draw()
 void PlayScene::update()
 {
 	updateDisplayList();
-
+	
 	///CollisionManager::AABBCheck(m_pSpaceShip, m_pObstacle))
 
 	// My hilarious attempts at some sort of real obstacle avoidance
-	if (CollisionManager::lineRectCheck(m_pSpaceShip->m_middleWhisker.Start(), m_pSpaceShip->m_middleWhisker.End(), 
+	if (CollisionManager::lineRectCheck(m_pSpaceShip->m_leftWhisker.Start(), m_pSpaceShip->m_leftWhisker.End(), 
 		m_pObstacle->getTransform()->position - glm::vec2(75.0f, 100.0f), 150,200))
 	{
 		m_pSpaceShip->setColliding(true);
-		m_pSpaceShip->setRotation(m_pSpaceShip->getRotation()+ 0.1f * Util::Rad2Deg);
+		m_pSpaceShip->setRotation(m_pSpaceShip->getRotation()+ 0.3f * Util::Rad2Deg);
+		m_pSpaceShip->getRigidBody()->velocity *= 0.0f;
 		
+	}
+
+	if (CollisionManager::lineRectCheck(m_pSpaceShip->m_rightWhisker.Start(), m_pSpaceShip->m_rightWhisker.End(),
+		m_pObstacle->getTransform()->position - glm::vec2(75.0f, 100.0f), 150, 200))
+	{
+		m_pSpaceShip->setColliding(true);
+		m_pSpaceShip->setRotation(m_pSpaceShip->getRotation() - 0.3f * Util::Rad2Deg);
+		m_pSpaceShip->getRigidBody()->velocity *= 0.0f;
+
 	}
 	
 	if (!CollisionManager::lineRectCheck(m_pSpaceShip->m_middleWhisker.Start(), m_pSpaceShip->m_middleWhisker.End(),
